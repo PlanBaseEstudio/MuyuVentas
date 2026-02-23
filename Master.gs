@@ -3,8 +3,8 @@
 *****************************************
 PROYECTO: Muyu Ventas
 ARCHIVO: Master.gs
-VERSIÓN: 03.01
-FECHA: 10/02/2026 15:52 (UTC-5)
+VERSIÓN: 03.02
+FECHA: 22/02/2026 22:32 (UTC-5)
 *****************************************
 */
 // MOD-001: FIN
@@ -36,6 +36,11 @@ function doGet(e) {
         return HtmlService.createHtmlOutputFromFile('Multiventaw')
           .setTitle('Registro Múltiple de Ventas')
           .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+
+      case 'movil':
+        return HtmlService.createHtmlOutputFromFile('Movilw')
+          .setTitle('Venta Móvil')
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
       
       default:
         return HtmlService.createHtmlOutputFromFile('Masterw')
@@ -51,6 +56,7 @@ function doGet(e) {
         <li>Masterw.html</li>
         <li>Univentaw.html</li>
         <li>Multiventaw.html</li>
+        <li>Movilw.html</li>
       </ul>
     `);
   }
@@ -164,7 +170,7 @@ DESCRIPCIÓN:
 Enrutador principal y configuración global de Muyu Ventas v1.00.
 
 DEPENDENCIAS:
-- HTML: Masterw.html, Univentaw.html, Multiventaw.html
+- HTML: Masterw.html, Univentaw.html, Multiventaw.html, Movilw.html
 - Spreadsheet: 1lZ8OEIfeUvHqxWsVHYy4W1ow2VpIYCvTr9YFAxDkCCU
   - Hojas: Ventas, Cat, Mpago
 
@@ -177,9 +183,5 @@ ADVERTENCIAS:
 - MOD-003: Verificar nombres exactos de archivos HTML
 - MOD-002: SPREADSHEET_ID debe tener permisos de edición
 - GMT-5 fijo para Perú (sin DST)
-
-COMPATIBILIDAD:
-✔ 100% alineado con CodeWorkShop v5.0
-✔ Google Apps Script v2026 estable
 */
 // MOD-099: FIN
