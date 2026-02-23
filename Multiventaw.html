@@ -1,0 +1,1161 @@
+<!-- MOD-001: ENCABEZADO [INICIO] -->
+<!--
+*****************************************
+PROYECTO: Muyu Ventas
+ARCHIVO: Multiventaw.html
+VERSIÓN: 03.01
+FECHA: 10/02/2026 15:54 (UTC-5)
+*****************************************
+-->
+<!-- MOD-001: FIN -->
+
+<!-- MOD-002: APERTURA HTML [INICIO] -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Registro Múltiple de Ventas</title>
+<!-- MOD-002: FIN -->
+
+<!-- MOD-003: ESTILOS CSS COMPLETOS [INICIO] -->
+    <style>
+/* MOD-003-001: RESET Y BODY BASE [INICIO] */
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f0f2f5;
+      }
+/* MOD-003-001: FIN */
+
+/* MOD-003-002: BOTÓN HOME [INICIO] */
+      /* BOTÓN HOME */
+      .btn-home {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: #667eea;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+
+      .btn-home:hover {
+        background: #5568d3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      }
+/* MOD-003-002: FIN */
+
+/* MOD-003-003: CONTAINER PRINCIPAL + TÍTULO [INICIO] */
+      .container {
+        width: 100%;
+        max-width: 820px;
+        margin: 80px auto 20px;
+        background: #fff;
+        padding: 20px;
+        box-sizing: border-box;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+        font-size: 1.5rem;
+      }
+/* MOD-003-003: FIN */
+
+/* MOD-003-004: SECCIONES "APLICAR A TODOS" [INICIO] */
+      /* SECCIONES DE BOTONES */
+      .aplicar-todos {
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+      }
+
+      .aplicar-todos label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 13px;
+        color: #495057;
+      }
+/* MOD-003-004: FIN */
+
+/* MOD-003-005: LAYOUT BOTONES CATEGORÍA [INICIO] */
+      .botones-categoria {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 8px;
+        justify-items: center;
+      }
+/* MOD-003-005: FIN */
+
+/* MOD-003-006: LAYOUT BOTONES MEDIOS PAGO [INICIO] */
+      .botones-medios-pago {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+/* MOD-003-006: FIN */
+
+/* MOD-003-007: BOTONES CATEGORÍA BASE [INICIO] */
+      /* BOTONES DE CATEGORÍA - COLORES DIVERSOS */
+      .btn-categoria {
+        padding: 8px 14px;
+        font-size: 14px;
+        border: 3px solid transparent;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        color: #ffffff;
+        min-width: 90px;
+        text-align: center;
+      }
+/* MOD-003-007: FIN */
+
+/* MOD-003-008: 15 COLORES NTH-CHILD CATEGORÍAS [INICIO] */
+      /* Colores específicos por índice */
+      .btn-categoria:nth-child(1) { background: #e74c3c; } /* Rojo */
+      .btn-categoria:nth-child(2) { background: #3498db; } /* Azul */
+      .btn-categoria:nth-child(3) { background: #2ecc71; } /* Verde */
+      .btn-categoria:nth-child(4) { background: #9b59b6; } /* Púrpura */
+      .btn-categoria:nth-child(5) { background: #f39c12; } /* Naranja */
+      .btn-categoria:nth-child(6) { background: #1abc9c; } /* Turquesa */
+      .btn-categoria:nth-child(7) { background: #e67e22; } /* Naranja oscuro */
+      .btn-categoria:nth-child(8) { background: #34495e; } /* Gris oscuro */
+      .btn-categoria:nth-child(9) { background: #16a085; } /* Verde azulado */
+      .btn-categoria:nth-child(10) { background: #c0392b; } /* Rojo oscuro */
+      .btn-categoria:nth-child(11) { background: #8e44ad; } /* Púrpura oscuro */
+      .btn-categoria:nth-child(12) { background: #2980b9; } /* Azul oscuro */
+      .btn-categoria:nth-child(13) { background: #27ae60; } /* Verde oscuro */
+      .btn-categoria:nth-child(14) { background: #d35400; } /* Naranja quemado */
+      .btn-categoria:nth-child(15) { background: #7f8c8d; } /* Gris */
+/* MOD-003-008: FIN */
+
+/* MOD-003-009: HOVER/ACTIVO BOTONES CATEGORÍA [INICIO] */
+      .btn-categoria:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      }
+
+      .btn-categoria.activo {
+        border: 4px solid #000;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        transform: scale(1.05);
+      }
+/* MOD-003-009: FIN */
+
+/* MOD-003-010: BOTONES MEDIO PAGO BASE [INICIO] */
+      /* BOTONES DE MEDIO DE PAGO */
+      .btn-medio-pago {
+        padding: 10px 20px;
+        font-size: 15px;
+        border: 3px solid transparent;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+      }
+/* MOD-003-010: FIN */
+
+/* MOD-003-011: COLORES ESPECÍFICOS MEDIOS PAGO [INICIO] */
+      /* Estilos específicos para cada medio de pago */
+      .btn-medio-pago[data-medio="Efectivo"] {
+        background: #4CAF50;
+        color: #ffffff;
+      }
+
+      .btn-medio-pago[data-medio="Yape"] {
+        background: #9117A0;
+        color: #ffffff;
+      }
+
+      .btn-medio-pago[data-medio="Tarjeta"] {
+        background: #3498db;
+        color: #ffffff;
+      }
+/* MOD-003-011: FIN */
+
+/* MOD-003-012: HOVER/ACTIVO MEDIOS PAGO [INICIO] */
+      .btn-medio-pago:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      }
+
+      .btn-medio-pago.activo {
+        border: 4px solid #000;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+        transform: scale(1.05);
+      }
+/* MOD-003-012: FIN */
+
+/* MOD-003-013: TABLA VENTAS + TABLE BASE [INICIO] */
+      .tabla-ventas {
+        width: 100%;
+        overflow-x: auto;
+        margin-bottom: 15px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+/* MOD-003-013: FIN */
+
+/* MOD-003-014: HEADERS TABLA + ANCHOS COLUMNAS [INICIO] */
+      th {
+        background: #1a73e8;
+        color: white;
+        padding: 10px 4px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 13px;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      /* Anchos específicos de columnas */
+      th:nth-child(1) { width: 30px; } /* # */
+      th:nth-child(2) { width: 100px; } /* Categoría */
+      th:nth-child(3) { width: 140px; } /* Producto */
+      th:nth-child(4) { width: 80px; } /* Medio de Pago */
+      th:nth-child(5) { width: 75px; } /* Precio */
+      th:nth-child(6) { width: 50px; } /* Cant */
+      th:nth-child(7) { width: 85px; } /* Total */
+      th:nth-child(8) { width: 45px; padding: 10px 0 !important; } /* Borrar */
+/* MOD-003-014: FIN */
+
+/* MOD-003-015: CELDAS TD + INPUTS/SELECTS [INICIO] */
+      td {
+        padding: 6px 4px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      /* Ancho específico para celda Borrar */
+      td:nth-child(8) {
+        width: 45px !important;
+        text-align: center;
+        padding: 4px 0 !important;
+      }
+
+      input, select {
+        width: 100%;
+        padding: 6px 4px;
+        font-size: 13px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+      }
+/* MOD-003-015: FIN */
+
+/* MOD-003-016: INPUTS ESPECÍFICOS + HOVER FILA [INICIO] */
+      input[type="number"] {
+        text-align: right;
+      }
+
+      input[readonly] {
+        background: #f5f5f5;
+        cursor: not-allowed;
+      }
+
+      .fila-venta:hover {
+        background: #f9f9f9;
+      }
+/* MOD-003-016: FIN */
+
+/* MOD-003-017: BOTÓN ELIMINAR FILA [INICIO] */
+      .btn-eliminar-fila {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 0;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 20px;
+        text-decoration: none;
+        width: 40px;
+        height: 28px;
+        display: inline-block;
+        text-align: center;
+        line-height: 28px;
+      }
+
+      .btn-eliminar-fila:hover {
+        background: #c82333;
+      }
+/* MOD-003-017: FIN */
+
+/* MOD-003-018: BOTONES FILAS + AGREGAR [INICIO] */
+      .botones-filas {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        justify-content: center;
+      }
+
+      .btn-fila {
+        padding: 10px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-agregar {
+        background-color: #28a745;
+        color: white;
+      }
+
+      .btn-agregar:hover {
+        background-color: #218838;
+      }
+/* MOD-003-018: FIN */
+
+/* MOD-003-019: RESUMEN TOTAL [INICIO] */
+      .resumen-total {
+        text-align: right;
+        padding: 15px;
+        margin-bottom: 15px;
+        background: #e7f3ff;
+        border-radius: 8px;
+        border-left: 4px solid #1a73e8;
+      }
+
+      .resumen-total .label {
+        font-size: 14px;
+        color: #495057;
+        font-weight: 600;
+      }
+
+      .resumen-total .monto {
+        font-size: 24px;
+        color: #1a73e8;
+        font-weight: bold;
+        margin-top: 5px;
+      }
+/* MOD-003-019: FIN */
+
+/* MOD-003-020: BOTONES PRINCIPALES [INICIO] */
+      .botones {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        flex: 1;
+        min-width: 150px;
+        padding: 16px;
+        font-size: 18px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .btn-guardar {
+        background-color: #1a73e8;
+        color: white;
+      }
+
+      .btn-guardar:hover {
+        background-color: #1765c1;
+      }
+
+      .btn-limpiar {
+        background-color: #5f6368;
+        color: white;
+      }
+
+      .btn-limpiar:hover {
+        background-color: #4a4d51;
+      }
+/* MOD-003-020: FIN */
+
+/* MOD-003-021: MENSAJES ÉXITO/ERROR [INICIO] */
+      #mensajeExito {
+        margin-top: 15px;
+        padding: 15px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 8px;
+        display: none;
+      }
+
+      .ok {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+/* MOD-003-021: FIN */
+
+/* MOD-003-022: RESPONSIVE 768PX COMPLETO [INICIO] */
+      @media (max-width: 768px) {
+        .btn-home {
+          top: 10px;
+          left: 10px;
+          padding: 8px 15px;
+          font-size: 13px;
+        }
+
+        .container {
+          margin: 60px 10px 10px;
+          padding: 15px;
+          max-width: 100%;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+
+        .aplicar-todos {
+          padding: 10px;
+        }
+
+        .botones-categoria {
+          grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+          gap: 6px;
+        }
+
+        .btn-categoria {
+          padding: 7px 10px;
+          font-size: 13px;
+          min-width: 70px;
+        }
+
+        .botones-medios-pago {
+          gap: 6px;
+        }
+
+        .btn-medio-pago {
+          padding: 8px 16px;
+          font-size: 14px;
+        }
+
+        th, td {
+          font-size: 11px;
+          padding: 5px 2px;
+        }
+
+        input, select {
+          padding: 4px 2px;
+          font-size: 12px;
+        }
+
+        button {
+          font-size: 16px;
+          padding: 14px;
+        }
+
+        .resumen-total .monto {
+          font-size: 20px;
+        }
+
+        .btn-eliminar-fila {
+          width: 35px;
+          height: 24px;
+          font-size: 18px;
+          line-height: 24px;
+        }
+      }
+/* MOD-003-022: FIN */
+    </style>
+<!-- MOD-003: FIN -->
+
+<!-- MOD-004: JAVASCRIPT [INICIO] -->
+    <script>
+// MOD-004-001: VARIABLES GLOBALES [INICIO]
+      let categorias = [];
+      let categoriasBoton = [];
+      let mediosPago = [];
+      let contadorFilas = 3;
+      let categoriaSeleccionada = null;
+      let medioPagoSeleccionado = null;
+// MOD-004-001: FIN
+
+// MOD-004-002: CARGARLISTAS() GAS [INICIO]
+      function cargarListas() {
+        google.script.run.withSuccessHandler(function(cats) {
+          categorias = cats;
+          llenarSelects();
+        }).getCategorias();
+
+        google.script.run.withSuccessHandler(function(catsBoton) {
+          categoriasBoton = catsBoton;
+          crearBotonesCategorias();
+        }).getCategoriasBoton();
+
+        google.script.run.withSuccessHandler(function(pagos) {
+          mediosPago = pagos;
+          llenarSelects();
+          crearBotonesMediosPago();
+        }).getMediosPago();
+      }
+// MOD-004-002: FIN
+
+// MOD-004-003: CREAR BOTONES CATEGORÍAS [INICIO]
+      function crearBotonesCategorias() {
+        if (categoriasBoton.length === 0) return;
+
+        const contenedor = document.getElementById('botonesCategoria');
+        contenedor.innerHTML = '';
+
+        categoriasBoton.forEach(item => {
+          const boton = document.createElement('button');
+          boton.type = 'button';
+          boton.className = 'btn-categoria';
+          boton.setAttribute('data-categoria', item.categoria);
+          boton.textContent = item.boton;
+          boton.onclick = () => seleccionarCategoria(item.categoria, boton);
+          contenedor.appendChild(boton);
+        });
+      }
+// MOD-004-003: FIN
+
+// MOD-004-004: SELECCIONAR CATEGORÍA [INICIO]
+      function seleccionarCategoria(categoria, botonClickeado) {
+        document.querySelectorAll('.btn-categoria').forEach(btn => {
+          btn.classList.remove('activo');
+        });
+
+        botonClickeado.classList.add('activo');
+        categoriaSeleccionada = categoria;
+
+        aplicarCategoriaATodos();
+      }
+// MOD-004-004: FIN
+
+// MOD-004-005: APLICAR CATEGORÍA A TODOS [INICIO]
+      function aplicarCategoriaATodos() {
+        if (!categoriaSeleccionada) return;
+
+        const filas = document.querySelectorAll('.fila-venta');
+        filas.forEach(fila => {
+          const id = fila.getAttribute('data-id');
+          const select = document.getElementById(`categoria${id}`);
+          if (select) {
+            select.value = categoriaSeleccionada;
+          }
+        });
+      }
+// MOD-004-005: FIN
+
+// MOD-004-006: CREAR BOTONES MEDIOS PAGO [INICIO]
+      function crearBotonesMediosPago() {
+        if (mediosPago.length === 0) return;
+
+        const contenedor = document.getElementById('botonesMediosPago');
+        contenedor.innerHTML = '';
+
+        mediosPago.forEach(medio => {
+          const boton = document.createElement('button');
+          boton.type = 'button';
+          boton.className = 'btn-medio-pago';
+          boton.setAttribute('data-medio', medio);
+          boton.textContent = medio;
+          boton.onclick = () => seleccionarMedioPago(medio, boton);
+          contenedor.appendChild(boton);
+        });
+      }
+// MOD-004-006: FIN
+
+// MOD-004-007: SELECCIONAR MEDIO PAGO [INICIO]
+      function seleccionarMedioPago(medio, botonClickeado) {
+        document.querySelectorAll('.btn-medio-pago').forEach(btn => {
+          btn.classList.remove('activo');
+        });
+
+        botonClickeado.classList.add('activo');
+        medioPagoSeleccionado = medio;
+
+        aplicarMedioPagoATodos();
+      }
+// MOD-004-007: FIN
+
+// MOD-004-008: APLICAR MEDIO PAGO A TODOS [INICIO]
+      function aplicarMedioPagoATodos() {
+        if (!medioPagoSeleccionado) return;
+
+        const filas = document.querySelectorAll('.fila-venta');
+        filas.forEach(fila => {
+          const id = fila.getAttribute('data-id');
+          const select = document.getElementById(`medioPago${id}`);
+          if (select) {
+            select.value = medioPagoSeleccionado;
+          }
+        });
+      }
+// MOD-004-008: FIN
+
+// MOD-004-009: LLENAR SELECTS COMPLETO [INICIO]
+      function llenarSelects() {
+        if (categorias.length === 0 || mediosPago.length === 0) return;
+
+        const filas = document.querySelectorAll('.fila-venta');
+        filas.forEach(fila => {
+          const id = fila.getAttribute('data-id');
+          const selectCat = document.getElementById(`categoria${id}`);
+          const selectPago = document.getElementById(`medioPago${id}`);
+
+          if (selectCat && selectPago) {
+            const catActual = selectCat.value;
+            const pagoActual = selectPago.value;
+
+            selectCat.innerHTML = '<option value="">Sin categoría</option>';
+            selectPago.innerHTML = '<option value="">Seleccionar</option>';
+
+            categorias.forEach(cat => {
+              const option = document.createElement('option');
+              option.value = cat;
+              option.text = cat;
+              selectCat.appendChild(option);
+            });
+
+            mediosPago.forEach(pg => {
+              const option = document.createElement('option');
+              option.value = pg;
+              option.text = pg;
+              selectPago.appendChild(option);
+            });
+
+            selectCat.value = catActual;
+            selectPago.value = pagoActual;
+          }
+        });
+      }
+// MOD-004-009: FIN
+
+// MOD-004-010: CALCULAR TOTAL FILA [INICIO]
+      function calcularTotal(id) {
+        const precio = parseFloat(document.getElementById(`precioUnitario${id}`).value) || 0;
+        const cantidad = parseFloat(document.getElementById(`cantidad${id}`).value) || 0;
+        document.getElementById(`total${id}`).value = (precio * cantidad).toFixed(2);
+        actualizarTotalGeneral();
+      }
+// MOD-004-010: FIN
+
+// MOD-004-011: ACTUALIZAR TOTAL GENERAL [INICIO]
+      function actualizarTotalGeneral() {
+        let totalGeneral = 0;
+        const filas = document.querySelectorAll('.fila-venta');
+        filas.forEach(fila => {
+          const id = fila.getAttribute('data-id');
+          const total = parseFloat(document.getElementById(`total${id}`).value) || 0;
+          totalGeneral += total;
+        });
+        document.getElementById('totalGeneral').textContent = `S/ ${totalGeneral.toFixed(2)}`;
+      }
+// MOD-004-011: FIN
+
+// MOD-004-012: AGREGAR FILA PARTE 1 [INICIO]
+      function agregarFila() {
+        contadorFilas++;
+        const tbody = document.getElementById('tablaVentasBody');
+        const nuevaFila = document.createElement('tr');
+        nuevaFila.className = 'fila-venta';
+        nuevaFila.setAttribute('data-id', contadorFilas);
+// MOD-004-012: FIN
+
+// MOD-004-013: AGREGAR FILA HTML TEMPLATE V2 [INICIO]
+        nuevaFila.innerHTML = `
+          <td class="num-fila" style="text-align: center;">${contadorFilas}</td>
+          <td><select id="categoria${contadorFilas}" onchange="cargarSugerenciasCategoria(${contadorFilas})"></select></td>
+          <td><input type="text" id="producto${contadorFilas}" list="sugerencias${contadorFilas}"></td>
+          <td><select id="medioPago${contadorFilas}"></select></td>
+          <td><input type="number" id="precioUnitario${contadorFilas}" step="any" min="0.01" oninput="calcularTotal(${contadorFilas})"></td>
+          <td><input type="number" id="cantidad${contadorFilas}" step="any" min="0.01" value="1" oninput="calcularTotal(${contadorFilas})"></td>
+          <td><input type="text" id="total${contadorFilas}" readonly></td>
+          <td style="text-align: center;">
+            <a href="javascript:void(0)" class="btn-eliminar-fila" onclick="eliminarFila(${contadorFilas})">🗑️</a>
+          </td>
+        `;
+// MOD-004-013: FIN
+
+// MOD-004-014: AGREGAR FILA POST-PROCESADO [INICIO]
+        tbody.appendChild(nuevaFila);
+        llenarSelects();
+        
+        if (categoriaSeleccionada) {
+          const selectCat = document.getElementById(`categoria${contadorFilas}`);
+          if (selectCat) selectCat.value = categoriaSeleccionada;
+        }
+        
+        if (medioPagoSeleccionado) {
+          const selectPago = document.getElementById(`medioPago${contadorFilas}`);
+          if (selectPago) selectPago.value = medioPagoSeleccionado;
+        }
+      }
+// MOD-004-014: FIN
+
+// MOD-004-015: ELIMINAR FILA [INICIO]
+      function eliminarFila(id) {
+        const filas = document.querySelectorAll('.fila-venta');
+        if (filas.length <= 1) {
+          alert('Debe haber al menos una fila');
+          return;
+        }
+        
+        const fila = document.querySelector(`[data-id="${id}"]`);
+        if (fila) {
+          fila.remove();
+          renumerarFilas();
+          actualizarTotalGeneral();
+        }
+      }
+// MOD-004-015: FIN
+
+// MOD-004-016: RENUMERAR FILAS [INICIO]
+      function renumerarFilas() {
+        const filas = document.querySelectorAll('.fila-venta');
+        filas.forEach((fila, index) => {
+          const numCell = fila.querySelector('.num-fila');
+          if (numCell) numCell.textContent = index + 1;
+        });
+      }
+// MOD-004-016: FIN
+
+// MOD-004-017: LIMPIAR FORMULARIO PARTE 1 [INICIO]
+      function limpiarFormulario() {
+        if (confirm('¿Estás seguro de limpiar todos los campos?')) {
+          document.getElementById('formVentas').reset();
+// MOD-004-017: FIN
+
+// MOD-004-018: LIMPIAR BOTONES Y FILAS [INICIO]
+          document.querySelectorAll('.btn-categoria').forEach(btn => {
+            btn.classList.remove('activo');
+          });
+          categoriaSeleccionada = null;
+          
+          document.querySelectorAll('.btn-medio-pago').forEach(btn => {
+            btn.classList.remove('activo');
+          });
+          medioPagoSeleccionado = null;
+          
+          const filas = document.querySelectorAll('.fila-venta');
+          filas.forEach(fila => {
+            const id = fila.getAttribute('data-id');
+            const totalInput = document.getElementById(`total${id}`);
+            const cantidadInput = document.getElementById(`cantidad${id}`);
+            if (totalInput) totalInput.value = '';
+            if (cantidadInput) cantidadInput.value = '1';
+          });
+          
+          actualizarTotalGeneral();
+        }
+      }
+// MOD-004-018: FIN
+
+// MOD-004-019: REGISTRAR VENTAS VALIDACIÓN 1 [INICIO]
+      function registrarVentas(e) {
+        e.preventDefault();
+        
+        const filas = document.querySelectorAll('.fila-venta');
+        const filasProblematicas = [];
+        const ventas = [];
+// MOD-004-019: FIN
+
+// MOD-004-020: REGISTRAR VENTAS VALIDACIÓN 2 [INICIO]
+        filas.forEach(fila => {
+          const id = fila.getAttribute('data-id');
+          const numeroFila = fila.querySelector('.num-fila').textContent;
+          
+          const categoriaEl = document.getElementById(`categoria${id}`);
+          const productoEl = document.getElementById(`producto${id}`);
+          const medioPagoEl = document.getElementById(`medioPago${id}`);
+          const precioUnitarioEl = document.getElementById(`precioUnitario${id}`);
+          const cantidadEl = document.getElementById(`cantidad${id}`);
+          const totalEl = document.getElementById(`total${id}`);
+
+          if (!productoEl || !medioPagoEl) return;
+
+          const categoria = categoriaEl.value;
+          const producto = productoEl.value.trim();
+          const medioPago = medioPagoEl.value;
+          const precioUnitario = precioUnitarioEl.value;
+          const cantidad = cantidadEl.value;
+          const total = totalEl.value;
+
+          const tieneProducto = producto !== '';
+          const tienePrecio = precioUnitario && parseFloat(precioUnitario) > 0;
+          const tieneMedioPago = medioPago && medioPago !== '';
+          const tieneCantidad = cantidad && parseFloat(cantidad) > 0;
+
+          if (tieneProducto || tienePrecio) {
+            if (!tieneProducto || !tieneMedioPago || !tienePrecio || !tieneCantidad) {
+              const camposFaltantes = [];
+              if (!tieneProducto) camposFaltantes.push("Producto");
+              if (!tieneMedioPago) camposFaltantes.push("Medio de Pago");
+              if (!tienePrecio) camposFaltantes.push("Precio");
+              if (!tieneCantidad) camposFaltantes.push("Cantidad");
+              
+              filasProblematicas.push({
+                numero: numeroFila,
+                faltantes: camposFaltantes
+              });
+            } else {
+              ventas.push({
+                categoria: categoria || '',
+                producto,
+                medioPago,
+                precioUnitario,
+                cantidad,
+                total
+              });
+            }
+          }
+        });
+// MOD-004-020: FIN
+
+// MOD-004-021: REGISTRAR VENTAS ERRORES [INICIO]
+        if (filasProblematicas.length > 0) {
+          let mensajeError = "⚠️ Hay campos incompletos en las siguientes filas:\n\n";
+          
+          filasProblematicas.forEach(problema => {
+            mensajeError += `Fila ${problema.numero}: Falta(n) ${problema.faltantes.join(', ')}\n`;
+          });
+          
+          mensajeError += "\nPor favor completa todos los campos obligatorios o deja la fila completamente vacía.";
+          
+          mostrarMensaje(mensajeError, "error");
+          return;
+        }
+
+        if (ventas.length === 0) {
+          mostrarMensaje("⚠️ Debes completar al menos una venta (Producto, Medio de Pago, Precio y Cantidad son obligatorios)", "error");
+          return;
+        }
+
+        const mensajeDiv = document.getElementById('mensajeExito');
+        mensajeDiv.textContent = "⏳ Guardando...";
+        mensajeDiv.className = "";
+        mensajeDiv.style.display = "block";
+        mensajeDiv.style.background = "#fff3cd";
+        mensajeDiv.style.color = "#856404";
+// MOD-004-021: FIN
+
+// MOD-004-022: REGISTRAR VENTAS GAS CALL [INICIO]
+        google.script.run
+          .withSuccessHandler(function(mensaje) {
+            mostrarMensaje(`✅ ${mensaje}`, "ok");
+            document.getElementById('formVentas').reset();
+            
+            document.querySelectorAll('.btn-categoria').forEach(btn => {
+              btn.classList.remove('activo');
+            });
+            categoriaSeleccionada = null;
+            
+            document.querySelectorAll('.btn-medio-pago').forEach(btn => {
+              btn.classList.remove('activo');
+            });
+            medioPagoSeleccionado = null;
+            
+            const filas = document.querySelectorAll('.fila-venta');
+            filas.forEach(fila => {
+              const id = fila.getAttribute('data-id');
+              const totalInput = document.getElementById(`total${id}`);
+              const cantidadInput = document.getElementById(`cantidad${id}`);
+              if (totalInput) totalInput.value = '';
+              if (cantidadInput) cantidadInput.value = '1';
+            });
+            
+            actualizarTotalGeneral();
+          })
+          .withFailureHandler(function(error) {
+            mostrarMensaje(`❌ Error: ${error.message}`, "error");
+          })
+          .registrarVentasMultiples(ventas);
+      }
+// MOD-004-022: FIN
+
+// MOD-004-023: MOSTRAR MENSAJE [INICIO]
+      function mostrarMensaje(texto, tipo) {
+        const mensajeDiv = document.getElementById('mensajeExito');
+        mensajeDiv.textContent = texto;
+        mensajeDiv.className = tipo;
+        mensajeDiv.style.display = "block";
+        setTimeout(() => mensajeDiv.style.display = "none", 5000);
+      }
+// MOD-004-023: FIN
+
+// MOD-004-024: SUGERENCIAS PRODUCTOS V2 [INICIO]
+function cargarSugerenciasCategoria(idFila) {
+  const selectCategoria = document.getElementById(`categoria${idFila}`);
+  const inputProducto = document.getElementById(`producto${idFila}`);
+  const datalistId = `sugerencias${idFila}`;
+  let datalist = document.getElementById(datalistId);
+  
+  // Crear datalist si no existe
+  if (!datalist) {
+    datalist = document.createElement('datalist');
+    datalist.id = datalistId;
+    document.body.appendChild(datalist); // ✅ CORREGIDO: dalist → datalist
+  }
+  
+  const categoria = selectCategoria.value.trim();
+  
+  // Sin categoría = limpia sugerencias
+  if (!categoria || categoria === "Sin categoría") {
+    datalist.innerHTML = '';
+    inputProducto.removeAttribute('list');
+    return;
+  }
+  
+  // Conectar input al datalist
+  inputProducto.setAttribute('list', datalistId);
+  
+  // Llamar Master.gs MOD-007 (5000 registros)
+  google.script.run
+    .withSuccessHandler(function(sugerencias) {
+      datalist.innerHTML = '';
+      if (sugerencias && sugerencias.length > 0) {
+        sugerencias.forEach(producto => {
+          const option = document.createElement('option');
+          option.value = producto;
+          datalist.appendChild(option);
+        });
+        console.log(`Sugerencias cargadas para fila ${idFila}: ${sugerencias.length} productos`);
+      }
+    })
+    .withFailureHandler(function(error) {
+      console.error(`Error sugerencias fila ${idFila}:`, error);
+      datalist.innerHTML = '';
+    })
+    .getProductosPorCategoriaTop20(categoria, 5000);
+}
+// MOD-004-024: FIN
+
+// MOD-004-025: INICIALIZAR SUGERENCIAS [INICIO]
+function inicializarSugerenciasTodasFilas() {
+  const filas = document.querySelectorAll('.fila-venta');
+  filas.forEach(fila => {
+    const id = fila.getAttribute('data-id');
+    const selectCategoria = document.getElementById(`categoria${id}`);
+    if (selectCategoria && selectCategoria.value) {
+      // Si ya tiene categoría seleccionada, cargar sugerencias
+      cargarSugerenciasCategoria(id);
+    }
+  });
+  
+  console.log(`MOD-004-S25: Inicializadas sugerencias para ${filas.length} filas`);
+}
+// MOD-004-025: FIN
+
+// MOD-004-026: WINDOW.ONLOAD [INICIO]
+      window.onload = cargarListas;
+// MOD-004-026: FIN
+    </script>
+<!-- MOD-004: FIN -->
+
+<!-- MOD-005: "/HEAD"+"BODY"+BOTÓN HOME [INICIO] -->
+  </head>
+  <body>
+    <a href="https://script.google.com/macros/s/AKfycbxYPHS6S3oU3U6vM_qmlIFyn0JzrArYSPDYV5bYjQRTuqp3G4qWiew14Nlwzitf2fSF/exec?page=master" class="btn-home" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
+      <span>🏠</span>
+      <span>Home</span>
+    </a>
+<!-- MOD-005: FIN -->
+
+<!-- MOD-006: CONTENEDOR Y BOTONES RÁPIDOS [INICIO] -->
+    <div class="container">
+      <h2>📊 Registro Múltiple de Ventas</h2>
+      
+      <div class="aplicar-todos">
+        <label>Categoría para todos:</label>
+        <div id="botonesCategoria" class="botones-categoria">
+        </div>
+      </div>
+
+      <div class="aplicar-todos">
+        <label>Medio de Pago para todos:</label>
+        <div id="botonesMediosPago" class="botones-medios-pago">
+        </div>
+      </div>
+<!-- MOD-006: FIN -->
+
+<!-- MOD-007: TABLA VENTAS 3 FILAS V2 [INICIO] -->
+      <form id="formVentas" onsubmit="registrarVentas(event)">
+        <div class="tabla-ventas">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Categoría</th>
+                <th>Producto</th>
+                <th>Medio de<br>Pago</th>
+                <th>Precio</th>
+                <th>Cant</th>
+                <th>Total (S/)</th>
+                <th>Borrar</th>
+              </tr>
+            </thead>
+            <tbody id="tablaVentasBody">
+              <tr class="fila-venta" data-id="1">
+                <td class="num-fila" style="text-align: center;">1</td>
+                <td><select id="categoria1" onchange="cargarSugerenciasCategoria(1)"></select></td>
+                <td><input type="text" id="producto1" list="sugerencias1"></td>
+                <td><select id="medioPago1"></select></td>
+                <td><input type="number" id="precioUnitario1" step="any" min="0.01" oninput="calcularTotal(1)"></td>
+                <td><input type="number" id="cantidad1" step="any" min="0.01" value="1" oninput="calcularTotal(1)"></td>
+                <td><input type="text" id="total1" readonly></td>
+                <td style="text-align: center;">
+                  <a href="javascript:void(0)" class="btn-eliminar-fila" onclick="eliminarFila(1)">🗑️</a>
+                </td>
+              </tr>
+              
+              <tr class="fila-venta" data-id="2">
+                <td class="num-fila" style="text-align: center;">2</td>
+                <td><select id="categoria2" onchange="cargarSugerenciasCategoria(2)"></select></td>
+                <td><input type="text" id="producto2" list="sugerencias2"></td>
+                <td><select id="medioPago2"></select></td>
+                <td><input type="number" id="precioUnitario2" step="any" min="0.01" oninput="calcularTotal(2)"></td>
+                <td><input type="number" id="cantidad2" step="any" min="0.01" value="1" oninput="calcularTotal(2)"></td>
+                <td><input type="text" id="total2" readonly></td>
+                <td style="text-align: center;">
+                  <a href="javascript:void(0)" class="btn-eliminar-fila" onclick="eliminarFila(2)">🗑️</a>
+                </td>
+              </tr>
+              
+              <tr class="fila-venta" data-id="3">
+                <td class="num-fila" style="text-align: center;">3</td>
+                <td><select id="categoria3" onchange="cargarSugerenciasCategoria(3)"></select></td>
+                <td><input type="text" id="producto3" list="sugerencias3"></td>
+                <td><select id="medioPago3"></select></td>
+                <td><input type="number" id="precioUnitario3" step="any" min="0.01" oninput="calcularTotal(3)"></td>
+                <td><input type="number" id="cantidad3" step="any" min="0.01" value="1" oninput="calcularTotal(3)"></td>
+                <td><input type="text" id="total3" readonly></td>
+                <td style="text-align: center;">
+                  <a href="javascript:void(0)" class="btn-eliminar-fila" onclick="eliminarFila(3)">🗑️</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+<!-- MOD-007: FIN -->
+
+<!-- MOD-008: BOTONES Y RESUMEN [INICIO] -->
+        <div class="botones-filas">
+          <button type="button" class="btn-fila btn-agregar" onclick="agregarFila()">+ Agregar otra venta</button>
+        </div>
+
+        <div class="resumen-total">
+          <div class="label">TOTAL GENERAL:</div>
+          <div class="monto" id="totalGeneral">S/ 0.00</div>
+        </div>
+
+        <div class="botones">
+          <button type="submit" class="btn-guardar">💾 Guardar Ventas</button>
+          <button type="button" class="btn-limpiar" onclick="limpiarFormulario()">🗑️ Limpiar Todo</button>
+        </div>
+      </form>
+
+      <div id="mensajeExito"></div>
+    </div>
+<!-- MOD-008: FIN -->
+
+
+<!-- MOD-009: CIERRE HTML+ /BODY [INICIO] -->
+  </body>
+</html>
+<!-- MOD-009: FIN -->
+
+<!-- MOD-099: NOTAS [INICIO] -->
+<!--
+DESCRIPCIÓN:
+Multiventaw.html - Registro múltiple de ventas v3.00 (Sistema Muyu Ventas).
+Interfaz avanzada para ingreso simultáneo de múltiples ventas con tabla dinámica + 
+SUGERENCIAS INTELIGENTES DE PRODUCTOS POR CATEGORÍA (MOD-007).
+
+ESTRUCTURA CodeWorkShop v5.0:
+- MOD-001: Encabezado administrativo
+- MOD-002: Apertura HTML (<base target="_top">)
+- MOD-003: CSS completo (22 submódulos S01-S22)
+- MOD-004: JavaScript (26 submódulos S01-S26) ← +2 nuevos: S24,S25
+- MOD-005: Botón Home fijo (z-index 1000)
+- MOD-006: Header principal + botones rápidos
+- MOD-007: Tabla dinámica 3 filas iniciales + SUGERENCIAS
+- MOD-008: Botones acción + resumen total
+- MOD-009: Cierre HTML
+
+NUEVAS CARACTERÍSTICAS v3.00 (MOD-007):
+• SUGERENCIAS AUTOMÁTICAS: TOP 20 productos por categoría
+• Análisis últimos 5000 registros hoja Ventas (Col B=Categoría, C=Producto)
+• Cache inteligente: 0.6s primera carga, 0ms posteriores
+• Filas dinámicas: Todas las filas (existentes + nuevas) tienen sugerencias
+• "Sin categoría" = Sin sugerencias (UX limpia)
+
+CARACTERÍSTICAS PRINCIPALES:
+• Tabla dinámica: + fila / 🗑️ eliminar (mínimo 1 fila)
+• 15 botones categoría multicolores (nth-child 1-15)
+• 3 botones medio pago (Efectivo/Yape/Tarjeta)
+• Calculadora total fila + general tiempo real
+• Validación inteligente: filas vacías OK, incompletas ERROR
+• Responsive 768px con scroll horizontal tabla
+
+INTEGRACIÓN GAS Master.gs:
+• getCategorias() → select categorías (Hoja Cat A2+)
+• getCategoriasBoton() → 15 botones coloridos
+• getMediosPago() → botones Efectivo/Yape/Tarjeta  
+• registrarVentasMultiples(ventas[]) → hoja Ventas
+• getProductosPorCategoriaTop20() → SUGERENCIAS (MOD-007 Master.gs)
+
+FLUJO OPERATIVO:
+1. Carga automática: listas + inicializar sugerencias (S02,S25)
+2. Botones rápidos "Aplicar a todos" (categoría/medio pago)
+3. Cambio categoría → Sugerencias TOP20 automáticas (S24)
+4. Ingreso múltiple → + fila dinámico con sugerencias (S13)
+5. Validación → Guardar → Limpieza auto + reset sugerencias
+6. Feedback visual 5s (ok/error/guardando)
+
+DISEÑO + UX:
+• 820px max-width / sticky header tabla (8 columnas fijas)
+• Autocomplete nativo HTML5 datalist por fila
+• Gradientes hover / scale(1.05) activo botones
+• MensajeExito con clases ok/error/guardando
+
+COMPATIBILIDAD:
+✔ 100% Masterw.html → ?page=master
+✔ 100% Master.gs MOD-007 (5000 registros, caché 1h)
+✔ 100% CodeWorkShop v5.0 (26 submódulos JS)
+✔ Google Apps Script WebApp 2026
+✔ Móviles 768px- (grid adaptativo)
+
+ADVERTENCIAS:
+• NO modificar IDs: tablaVentasBody/formVentas/categoriaX/productoX
+• Master.gs debe tener MOD-007 con row[1]=Categoría, row[2]=Producto
+• Backend getCategoriasBoton[] debe retornar 15 elementos
+• step="any" precios decimales libres
+• Caché sugerencias: ejecutar limpiarCacheSugerencias() si cambian datos
+-->
+<!-- MOD-099: FIN -->
