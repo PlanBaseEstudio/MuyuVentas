@@ -3,8 +3,8 @@
 *****************************************
 PROYECTO: Muyu Ventas
 ARCHIVO: Univentaw.html
-VERSIÓN: 01.02
-FECHA: 10/02/2026 15:55 (UTC-5)
+VERSIÓN: 01.03
+FECHA: 13/03/2026 12:54 (UTC-5)
 *****************************************
 -->
 <!-- MOD-001: FIN -->
@@ -39,8 +39,8 @@ FECHA: 10/02/2026 15:55 (UTC-5)
   <label for="producto">Producto:</label>
   <input type="text" id="producto" placeholder="Nombre del producto">
 
-  <label for="modoPago">Modo de Pago:</label>
-  <select id="modoPago"></select>
+  <label>Modo de Pago:</label>
+  <div id="btnsModoPago" class="btns-modo-pago"></div>
 
   <label for="precio">Precio Unitario (S/):</label>
   <input type="number" id="precio" step="0.01" min="0">
@@ -51,7 +51,7 @@ FECHA: 10/02/2026 15:55 (UTC-5)
   <label for="total">Total (S/):</label>
   <input type="text" id="total" readonly>
 
-  <button onclick="registrarVenta()">Registrar venta</button>
+  <button id="btnRegistrar" onclick="registrarVenta()">Registrar venta</button>
   <p id="mensaje"></p>
 </div>
 <!-- MOD-004: FIN -->
@@ -136,7 +136,7 @@ button {
   cursor: pointer;
   font-size: 16px;
 }
-button:hover {
+#btnRegistrar:hover {
   background: #0056b3;
 }
 #mensaje {
@@ -162,6 +162,40 @@ button:hover {
   }
 }
 /* MOD-005-005: FIN */
+
+/* MOD-005-006: BOTONES MODO PAGO [INICIO] */
+.btns-modo-pago {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.btn-pago {
+  flex: 1;
+  min-width: 80px;
+  padding: 9px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 3px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+  transition: all 0.2s ease;
+  margin-top: 0;
+}
+.btn-pago:nth-child(1) { background: #4CAF50; }
+.btn-pago:nth-child(2) { background: #9117A0; }
+.btn-pago:nth-child(3) { background: #3498db; }
+.btn-pago:nth-child(4) { background: #e67e22; }
+.btn-pago:nth-child(5) { background: #e74c3c; }
+.btn-pago:hover { filter: brightness(1.1); }
+.btn-pago.activo {
+  border: 3px solid #000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transform: scale(1.05);
+}
+/* MOD-005-006: FIN */
 </style>
 <!-- MOD-005: FIN -->
 
@@ -185,12 +219,15 @@ function cargarCategorias(data) {
 }
 
 function cargarModosPago(data) {
-  const select = document.getElementById("modoPago");
+  const contenedor = document.getElementById("btnsModoPago");
+  contenedor.innerHTML = '';
   data.forEach(mp => {
-    const option = document.createElement("option");
-    option.value = mp;
-    option.textContent = mp;
-    select.appendChild(option);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn-pago";
+    btn.textContent = mp;
+    btn.onclick = () => seleccionarModoPago(mp, btn);
+    contenedor.appendChild(btn);
   });
 }
 // MOD-006-002: FIN
@@ -208,29 +245,64 @@ function calcularTotal() {
 
 // MOD-006-004: REGISTRAR VENTA [INICIO]
 function registrarVenta() {
+  if (!modoPagoSeleccionado) {
+    const msg = document.getElementById("mensaje");
+    msg.textContent = "⚠️ Selecciona un modo de pago.";
+    msg.style.display = "block";
+    msg.style.color = "red";
+    setTimeout(() => msg.style.display = "none", 4000);
+    return;
+  }
+
   const data = {
     categoria: document.getElementById("categoria").value,
-    producto: document.getElementById("producto").value,
-    modoPago: document.getElementById("modoPago").value,
-    precio: document.getElementById("precio").value,
-    cantidad: document.getElementById("cantidad").value
+    producto:  document.getElementById("producto").value,
+    modoPago:  modoPagoSeleccionado,
+    precio:    document.getElementById("precio").value,
+    cantidad:  document.getElementById("cantidad").value
   };
 
+  const btnRegistrar = document.getElementById("btnRegistrar");
   const msg = document.getElementById("mensaje");
-  msg.textContent = "Registro enviado";
+
+  btnRegistrar.disabled = true;
+  btnRegistrar.textContent = "Guardando...";
+  msg.textContent = "⏳ Guardando...";
   msg.style.display = "block";
-  msg.style.color = "green";
+  msg.style.color = "#856404";
 
-  google.script.run.registrarVenta(data);
-
-  document.getElementById("producto").value = "";
-  document.getElementById("precio").value = "";
-  document.getElementById("cantidad").value = "";
-  document.getElementById("total").value = "";
-
-  setTimeout(() => msg.style.display = "none", 10000);
+  google.script.run
+    .withSuccessHandler(function() {
+      msg.textContent = "✅ Registro exitoso";
+      msg.style.color = "green";
+      document.getElementById("producto").value = "";
+      document.getElementById("precio").value   = "";
+      document.getElementById("cantidad").value = "";
+      document.getElementById("total").value    = "";
+      btnRegistrar.disabled = false;
+      btnRegistrar.textContent = "Registrar venta";
+      setTimeout(() => msg.style.display = "none", 5000);
+    })
+    .withFailureHandler(function(err) {
+      msg.textContent = "❌ Error: " + err.message;
+      msg.style.color = "red";
+      btnRegistrar.disabled = false;
+      btnRegistrar.textContent = "Registrar venta";
+      setTimeout(() => msg.style.display = "none", 6000);
+    })
+    .registrarVenta(data);
 }
 // MOD-006-004: FIN
+
+// MOD-006-005: VARIABLE Y SELECTOR MODO PAGO [INICIO]
+let modoPagoSeleccionado = null;
+
+function seleccionarModoPago(modo, botonClickeado) {
+  document.querySelectorAll('.btn-pago').forEach(b => b.classList.remove('activo'));
+  botonClickeado.classList.add('activo');
+  modoPagoSeleccionado = modo;
+}
+// MOD-006-005: FIN
 </script>
 <!-- MOD-006: FIN -->
 
@@ -242,34 +314,32 @@ function registrarVenta() {
 <!-- MOD-099: NOTAS [INICIO] -->
 <!--
 DESCRIPCIÓN:
-Formulario Univentaw.html para registro simple de ventas v1.01.
+Formulario Univentaw.html para registro simple de ventas v1.03.
 
 ESTRUCTURA:
 - MOD-001: Encabezado administrativo
 - MOD-002: Apertura HTML5
 - MOD-003: Botón Home fijo (z-index 1000)
-- MOD-004: Formulario 6 campos + botón
-- MOD-005: CSS 5 submódulos (480px responsive)
-- MOD-006: JS 4 submódulos (Google Apps Script)
+- MOD-004: Formulario 6 campos + botón (modo pago: botones)
+- MOD-005: CSS 6 submódulos (480px responsive)
+- MOD-006: JS 5 submódulos (Google Apps Script)
 
 INTEGRACIÓN GAS:
 - Univenta.gs: getCategorias(), getModosPago(), registrarVenta()
 - Master.gs: Ruta ?page=master (Home)
 
 FLUJO:
-1. Carga automática categorías/medios pago
-2. Calculadora total tiempo real (precio × cantidad)
-3. Envío asíncrono sin bloqueo UI
-4. Limpieza automática + feedback 10s
+1. Carga automática categorías/modos pago
+2. Selección modo pago por botones (variable modoPagoSeleccionado)
+3. Calculadora total tiempo real (precio × cantidad)
+4. Envío asíncrono con bloqueo de botón anti-doble-envío
+5. Limpieza automática + feedback éxito/error
 
 CARACTERÍSTICAS:
 ✔ Botón Home flotante (morado #667eea)
 ✔ Formulario compacto 400px max-width
-✔ Input number step="0.01" para precio
-✔ Mensaje verde auto-desaparece
-
-COMPATIBILIDAD:
-✔ 100% CodeWorkShop v5.0
-✔ Estructura exacta del ejemplo
+✔ Botones modo pago con selección visual (borde negro)
+✔ Anti-doble-envío: botón deshabilitado durante envío
+✔ Handlers éxito/error explícitos
 -->
 <!-- MOD-099: FIN -->

@@ -3,8 +3,8 @@
 *****************************************
 PROYECTO: Muyu Ventas
 ARCHIVO: Univenta.gs
-VERSIÓN: 01.01
-FECHA: 10/02/2026 15:55 (UTC-5)
+VERSIÓN: 01.02
+FECHA: 13/03/2026 12:42 (UTC-5)
 *****************************************
 */
 // MOD-001: FIN
@@ -46,19 +46,26 @@ function registrarVenta(data) {
   sheet.getRange(newRow, 5).setValue(Number(data.precio));
   sheet.getRange(newRow, 6).setValue(Number(data.cantidad));
   sheet.getRange(newRow, 7).setFormula(`=E${newRow}*F${newRow}`);
-  
+
+  // Acumulado columna H
+  if (newRow === 2) {
+    sheet.getRange(newRow, 8).setFormula(`=G${newRow}`);
+  } else {
+    sheet.getRange(newRow, 8).setFormula(`=H${newRow - 1}+G${newRow}`);
+  }
+
   return "Registro exitoso";
 }
 // MOD-004: FIN
 
 // MOD-005: CÓDIGO DE CIERRE [INICIO]
-Logger.log('✅ Muyu Ventas Univenta.gs v01.00 cargado correctamente');
+Logger.log('✅ Muyu Ventas Univenta.gs v01.02 cargado correctamente');
 // MOD-005: FIN
 
 // MOD-099: NOTAS [INICIO]
 /*
 DESCRIPCIÓN:
-Módulo Univenta.gs para registro simple de ventas en Muyu Ventas v1.00.
+Módulo Univenta.gs para registro simple de ventas en Muyu Ventas.
 
 DEPENDENCIAS EXTERNAS:
 - Master.gs: obtenerSpreadsheet(), encontrarUltimaFila(), obtenerFechaPeru()
@@ -67,15 +74,11 @@ DEPENDENCIAS EXTERNAS:
 FLujo DE DATOS:
 - MOD-002: Carga categorías desde hoja Cat (A2:A)
 - MOD-003: Carga medios pago desde hoja Mpago (A2:A)
-- MOD-004: Registra venta en columnas A-G (Fecha, Cat, Prod, Pago, Precio, Cant, Total)
+- MOD-004: Registra venta en columnas A-H (Fecha, Cat, Prod, Pago, Precio, Cant, Total, Acum)
 
 ADVERTENCIAS:
 - MOD-004: Validar data.categoria y data.modoPago existan en listas
 - MOD-004: Precio y cantidad convertidos a Number()
 - Fórmula total auto-generada en columna G
-
-COMPATIBILIDAD:
-✔ 100% alineado con CodeWorkShop v5.0
-✔ Integración perfecta con Master.gs
 */
 // MOD-099: FIN
