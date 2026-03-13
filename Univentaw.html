@@ -3,8 +3,8 @@
 *****************************************
 PROYECTO: Muyu Ventas
 ARCHIVO: Univentaw.html
-VERSIÓN: 01.03
-FECHA: 13/03/2026 12:54 (UTC-5)
+VERSIÓN: 01.04
+FECHA: 13/03/2026 13:17 (UTC-5)
 *****************************************
 -->
 <!-- MOD-001: FIN -->
@@ -46,7 +46,11 @@ FECHA: 13/03/2026 12:54 (UTC-5)
   <input type="number" id="precio" step="0.01" min="0">
 
   <label for="cantidad">Cantidad:</label>
-  <input type="number" id="cantidad" min="1">
+  <div class="cantidad-ctrl">
+    <button type="button" class="btn-cant" onclick="cambiarCantidad(-1)">−</button>
+    <input type="number" id="cantidad" class="input-cantidad" value="1" step="any" min="0.01" oninput="calcularTotal()">
+    <button type="button" class="btn-cant" onclick="cambiarCantidad(1)">+</button>
+  </div>
 
   <label for="total">Total (S/):</label>
   <input type="text" id="total" readonly>
@@ -163,7 +167,7 @@ button {
 }
 /* MOD-005-005: FIN */
 
-/* MOD-005-006: BOTONES MODO PAGO [INICIO] */
+/* MOD-005-006: BOTONES MODO PAGO + CONTROL CANTIDAD [INICIO] */
 .btns-modo-pago {
   display: flex;
   gap: 8px;
@@ -194,6 +198,39 @@ button {
   border: 3px solid #000;
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   transform: scale(1.05);
+}
+.cantidad-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+}
+.btn-cant {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  margin-top: 0;
+}
+.btn-cant:hover { background: #1558b0; }
+.btn-cant:active { transform: scale(0.93); }
+.input-cantidad {
+  width: 60px;
+  text-align: center;
+  padding: 6px 4px;
+  font-size: 14px;
+  flex-shrink: 0;
 }
 /* MOD-005-006: FIN */
 </style>
@@ -237,8 +274,8 @@ document.getElementById("precio").addEventListener("input", calcularTotal);
 document.getElementById("cantidad").addEventListener("input", calcularTotal);
 
 function calcularTotal() {
-  const precio = parseFloat(document.getElementById("precio").value) || 0;
-  const cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
+  const precio    = parseFloat(document.getElementById("precio").value)    || 0;
+  const cantidad  = parseFloat(document.getElementById("cantidad").value)  || 0;
   document.getElementById("total").value = (precio * cantidad).toFixed(2);
 }
 // MOD-006-003: FIN
@@ -303,6 +340,17 @@ function seleccionarModoPago(modo, botonClickeado) {
   modoPagoSeleccionado = modo;
 }
 // MOD-006-005: FIN
+
+// MOD-006-006: CONTROL CANTIDAD +/- [INICIO]
+function cambiarCantidad(delta) {
+  const input  = document.getElementById("cantidad");
+  const actual = Math.floor(parseFloat(input.value) || 0);
+  const nuevo  = actual + delta;
+  if (nuevo < 1) return;
+  input.value = nuevo;
+  calcularTotal();
+}
+// MOD-006-006: FIN
 </script>
 <!-- MOD-006: FIN -->
 
@@ -314,15 +362,15 @@ function seleccionarModoPago(modo, botonClickeado) {
 <!-- MOD-099: NOTAS [INICIO] -->
 <!--
 DESCRIPCIÓN:
-Formulario Univentaw.html para registro simple de ventas v1.03.
+Formulario Univentaw.html para registro simple de ventas.
 
 ESTRUCTURA:
 - MOD-001: Encabezado administrativo
 - MOD-002: Apertura HTML5
 - MOD-003: Botón Home fijo (z-index 1000)
-- MOD-004: Formulario 6 campos + botón (modo pago: botones)
+- MOD-004: Formulario 6 campos + botón (modo pago: botones, cantidad: +/-)
 - MOD-005: CSS 6 submódulos (480px responsive)
-- MOD-006: JS 5 submódulos (Google Apps Script)
+- MOD-006: JS 6 submódulos (Google Apps Script)
 
 INTEGRACIÓN GAS:
 - Univenta.gs: getCategorias(), getModosPago(), registrarVenta()
@@ -339,6 +387,7 @@ CARACTERÍSTICAS:
 ✔ Botón Home flotante (morado #667eea)
 ✔ Formulario compacto 400px max-width
 ✔ Botones modo pago con selección visual (borde negro)
+✔ Control cantidad +/- con valor por defecto 1 (acepta decimales manuales)
 ✔ Anti-doble-envío: botón deshabilitado durante envío
 ✔ Handlers éxito/error explícitos
 -->
