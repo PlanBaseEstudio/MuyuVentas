@@ -3,8 +3,8 @@
 *****************************************
 PROYECTO: Muyu Ventas
 ARCHIVO: Master.gs
-VERSIÓN: 03.02
-FECHA: 22/02/2026 22:32 (UTC-5)
+VERSIÓN: 03.03
+FECHA: 02/04/2026 15:02 (UTC-5)
 *****************************************
 */
 // MOD-001: FIN
@@ -30,7 +30,8 @@ function doGet(e) {
       case 'univenta':
         return HtmlService.createHtmlOutputFromFile('Univentaw')
           .setTitle('Registro de Ventas')
-          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+          .addMetaTag('viewport', 'width=device-width, initial-scale=1.0');
       
       case 'multiventa':
         return HtmlService.createHtmlOutputFromFile('Multiventaw')
@@ -164,7 +165,7 @@ function limpiarCacheSugerencias() {
 Logger.log('✅ Muyu Ventas Master.gs v01.00 cargado correctamente');
 // MOD-008: FIN
 
-// MOD-099: NOTAS [INICIO]
+// MOD-NOTES: NOTAS [INICIO]
 /*
 DESCRIPCIÓN:
 Enrutador principal y configuración global de Muyu Ventas v1.00.
@@ -184,4 +185,4 @@ ADVERTENCIAS:
 - MOD-002: SPREADSHEET_ID debe tener permisos de edición
 - GMT-5 fijo para Perú (sin DST)
 */
-// MOD-099: FIN
+// MOD-NOTES: FIN
